@@ -40,8 +40,8 @@ describe('RestaurantInput', () => {
     // console.log(store.getState());
     input.simulate('change', { target: { value: 'Hello', name: 'text', id: 'text' }});
     form.simulate('submit',  { preventDefault() {} })
-    console.log("Store State :", store.getState().restaurants[0].text);
-    expect(store.getState().restaurants[0].text).to.equal("Hello")
+    // console.log("Store State :", store.getState().restaurants[0].text);
+    expect(store.getState().restaurants[0].text).to.equal('Hello')
   });
 
 });
@@ -120,7 +120,7 @@ describe('Restaurant Component with Redux', () => {
 
     const wrapper = mount(<Provider store={store}><App /></Provider>)
 
-    let deleteButton = wrapper.find('button').first();
+    let deleteButton = wrapper.find({name: 'delete'}).last();
 
     deleteButton.simulate('click',  { preventDefault() {} });
 
@@ -146,20 +146,24 @@ describe('Restaurant Component with Redux', () => {
 
     wrapper.update()
 
-    let deleteButton = wrapper.find('button').first();
+    let deleteButton = wrapper.find({name: 'delete'}).first();
 
     deleteButton.simulate('click');
-
+    // console.log("UpdateStore:")
+    // console.log("Length:", store.getState().restaurants.length)
     expect(store.getState().restaurants.length).to.equal(1);
+    // console.log("Restaurants", store.getState().restaurants)
     expect(store.getState().restaurants[0].text).to.equal('Chip Shop');
 
     input.simulate('change', { target: { value: 'Song', name: 'text', id: 'text' }});
     form.simulate('submit',  { preventDefault() {} });
 
-    deleteButton = wrapper.find('button').last();
+    deleteButton = wrapper.find({name: 'delete'}).last();
 
     deleteButton.simulate('click');
-
+    // console.log("test:", store.getState().restaurants)
+    // console.log("test:", store.getState().restaurants[0])
+   
     expect(store.getState().restaurants.length).to.equal(1);
     expect(store.getState().restaurants[0].text).to.equal('Chip Shop');
   });

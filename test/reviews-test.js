@@ -26,7 +26,7 @@ describe('ReviewInput Component', () => {
     const wrapper = shallow(<ReviewInput />);
     expect(wrapper.find('input').first().type()).to.equal('input');
     expect(wrapper.find('input').last().type()).to.equal('input');
-    expect(wrapper.find('input').length).to.eql(2)
+    expect(wrapper.find('input').length).to.eql(1)
   });
 
   it('has an initial state with text key set to empty string', () => {
