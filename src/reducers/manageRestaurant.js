@@ -3,6 +3,7 @@ export const cuidFn = cuid;
 
 export default function manageRestaurants(state = {
   restaurants: [],
+  reviews: [],
 }, action) {
   switch(action.type){
     case 'ADD_RESTAURANT':           
@@ -17,16 +18,15 @@ export default function manageRestaurants(state = {
       const rest = state.restaurants.filter(restaurant => restaurant.id !== action.id);
       return {...state, restaurants: rest}
     case 'ADD_REVIEW':
-       console.log("AddReview:", action.payload.text) 
-       console.log("AddReview ID:", action.payload.restaurantId) 
-       const rest1 = state.restaurants.find(restaurant => restaurant.id === action.payload.restaurantId);
-       const review = {id: cuidFn(), text: action.payload.text};
-       console.log("rest1 reviews:", rest1.reviews)
-       rest1.reviews.push(review);
-       return {...state, restaurants: state.restaurants}
+       console.log("AddReview:", action.review.text) 
+       console.log("AddReview ID:", action.review.restaurantId) 
+       const review = {id: cuidFn(), restaurantId: action.review.restaurantId, text: action.review.text};
+       return {...state, reviews: [...state.reviews, review]};
     case 'DELETE_REVIEW':
       console.log("DeleteReview:", action.payload)
-  } 
+      const deleteReviews = state.reviews.filter(review => review.id != action.payload);
+      return {...state, reviews: deleteReviews};
+  }   
   return state
 };
 

@@ -7,8 +7,8 @@ class ReviewsContainer extends Component {
   render() {
     return (
       <div>
-        <ReviewInput addReview={this.props.addReview} restaurant={this.props.restaurant}/>
-        <Reviews deleteReview={this.props.deleteReview} reviews={this.props.restaurant.reviews}/>
+        <ReviewInput addReview={this.props.addReview} restaurant={this.props.restaurant} restaurantId={this.props.restaurant.id}/>
+        <Reviews deleteReview={this.props.deleteReview} reviews={this.props.reviews.filter(review => review.restaurantId === this.props.restaurant.id)}/>
       </div>
     )
   }
@@ -16,8 +16,8 @@ class ReviewsContainer extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {    
-    addReview: (payload) => dispatch({ type: 'ADD_REVIEW', payload: payload}),
-    deleteReview: (payload) => dispatch({ type: 'DELETE_REVIEW', payload: payload})
+    addReview: (review) => dispatch({ type: 'ADD_REVIEW', review: review}),
+    deleteReview: (id) => dispatch({ type: 'DELETE_REVIEW', payload: id})
   };
 };
 
